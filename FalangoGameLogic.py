@@ -24,7 +24,7 @@ class Round:
 
     def evalRound(self): # evaluar el resultado de una ronda
         self.winner = 0
-        if self.player1.right.oneOpenFinger() and self.player2.right.oneOpenFinger():
+        if self.player1.right.hasOneOpenFinger() and self.player2.right.hasOneOpenFinger():
             fingerList1 = list(self.player1.right.fingersDict.values())
             fingerList2 = list(self.player2.right.fingersDict.values())
             fingerIndex1 = fingerList1.index(True)
@@ -75,7 +75,7 @@ class Game:
         self.roundList.append(newRound)
 
     def evalWinner(self) -> bool:
-        if self.player1.left.handOpened(): self.winner = self.player1
-        elif self.player2.left.handOpened(): self.winner = self.player2
+        if self.player1.left.isHandOpen(): self.winner = self.player1
+        elif self.player2.left.isHandOpen(): self.winner = self.player2
         else: self.winner = None
-        return self.player1.left.handOpened() or self.player2.left.handOpened()
+        return self.player1.left.isHandOpen() or self.player2.left.isHandOpen()
