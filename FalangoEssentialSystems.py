@@ -74,6 +74,13 @@ class Hand:
         return count
 
     def handNum(self) -> int: # Crea un número entre 0 y 31 que representa la posición actual de la mano tomando los dedos abiertos o cerrados como un número binario. 0 es todos cerrados, 31 es todos abiertos, el pulgar es el menos significativo y el meñique el más significativo
+        """
+        Función que representa la posición actual de la mano en términos de un número entre 0 y 31. Se puede pensar en cada dedo como un dígito de un número binario, donde el pulgar es el menos significativo y el meñique el más significativo.
+
+        Se usa para la selección de los sprites.
+
+        Retorna el número que representa la posición de la mano.
+        """
         num: int = 0
         power: int = 0
         for finger in self.fingersDict:
@@ -122,8 +129,7 @@ class Hand:
     def evalHandPos(self) -> None: # evaluar si la mano tiene una posición especial
         if self.hasTwoOpenFingers() and not(self.fingersDict["ring"]): # Debido a las posiciones existentes en el juego, el dedo anular no tiene posiciones que lo usen, por lo que tenerlo abierto descarta cualquier posición especial
             for pos in specialPositions.keys():
-                if specialPositions[pos] == self.fingersDict:
-                    self.specialPosition = pos
+                if specialPositions[pos] == self.fingersDict: self.specialPosition = pos
         else: self.specialPosition = ""
         self.sprite = self.evalHandSprite()
 
@@ -137,9 +143,11 @@ class Hand:
             if self.fingersDict[fingerNames[i]]: i = i - 1 - 5 * ((i - 1)//5)
             else:
                 self.openFinger(fingerNames[i])
-                return
+                break
+        self.evalHandPos()
+        return
 
-    def closeFinger(self, finger: str) -> None: # Cerrar un dedo a secas
+    def closeFinger(self, finger: str) -> None:
         self.fingersDict[finger] = False
         self.evalHandPos()
 
@@ -153,7 +161,7 @@ class Hand:
         self.specialPosition = ""
         self.evalHandPos()
 
-    def namesOfOpenFingers(self) -> list[str]: # devuelve una lista de los nombres de los dedos que están abiertos
+    def namesOfFingersOpen(self) -> list[str]: # devuelve una lista de los nombres de los dedos que están abiertos. Para ser usada por la pistola y el diablito
         openFingersList: list[str] = []
         for finger in self.fingersDict:
             if self.fingersDict[finger]: openFingersList.append(finger)
@@ -163,15 +171,16 @@ class Player:
     """
     Clase base para los jugadores, donde se definen todas las cosas que aplican para ambos jugadores sin importar cómo son.
 
-    Tienen 2 manos, un dedo escogido tanto para rondas como posiciones especiales, un ID, indicadores de uso para la tijera y la pistola para que solo se usen 1 vez por obtención, una cola de los últimos 2 dedos sacados para no sacar 3 veces seguidas el mismo y datos que van recopilando tanto para ser usados en las dificultades como para el historial de partidas
+    Tienen 2 manos, un dedo escogido tanto para rondas como posiciones especiales, un ID, indicadores de uso para la tijera y la pistola para que solo se usen 1 vez por obtención, una cola de los últimos 2 dedos sacados para no sacar 3 veces seguidas el mismo y datos que van recopilando tanto para ser usados en las dificultades como para el historial de partidas. isInverted se refiere a si usa los sprites invertidos o no
     """
-    def __init__(self, playerID: int, isInverted: bool):
+    def __init__(self, isInverted: bool):
         self.right: Hand = Hand(False, isInverted)
         self.left: Hand = Hand(True, isInverted)
 
         self.chosenFinger: str = ""
 
-        self.playerID: int = playerID
+        self.isRoundWinner: bool = False
+        self.isGameWinner: bool = False
 
         # Variables de estado de las posiciones especiales
         self.pistolUsed: bool = False
@@ -191,18 +200,24 @@ class Player:
         }
 
     # Métodos comunes
-    def updateLastTwoFingers(self, finger: str) -> None:
-        self.lastTwoFingers[1] = self.fingerHistory[0]
-        self.lastTwoFingers[0] = finger
+    def updateLastTwoFingers(self, finger: str) -> None: self.lastTwoFingers = [finger, self.lastTwoFingers[0]]
     
     def twoFingersInARow(self) -> bool: return self.lastTwoFingers[0] == self.lastTwoFingers[1] and self.lastTwoFingers != ""
     
-    def listOfOpenFingers(self) -> list[str]: return filter(lambda x: x, list(self.left.fingersDict.values))
+    def listOfOpenFingers(self) -> list[str]:
+        fingerList: list[str] = []
+
+        for finger in self.left.fingersDict:
+            if self.left.fingersDict[finger]: fingerList.append(finger)
+
+        return fingerList
 
     def closedFingerList(self) -> list[str]:
         fingerList: list[str] = []
+
         for finger in self.left.fingersDict:
             if not self.left.fingersDict[finger]: fingerList.append(finger)
+
         return fingerList
     
     def updateData(self):
@@ -219,8 +234,12 @@ class Player:
 
 class PlayerHuman(Player):
     def chooseFinger(self, finger: str):
-        if finger in set(fingerNames):
-            self.chosenFinger = finger
+        self.chosenFinger = finger
 
 class PlayerCPURandom(Player):
-    def chooseFinger(self): self.chosenFinger = rng.choice(fingerNames)
+    def chooseFinger(self, fingerList: list[str]):
+        self.chosenFinger = rng.choice(fingerList) 
+
+class PlayerAI(Player):
+    def chooseFinger(self, fingerList: list[str]):
+        ... #TODO
