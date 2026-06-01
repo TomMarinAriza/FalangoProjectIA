@@ -114,7 +114,7 @@ class Hand:
         
         # Si no se cumple el elif, se presume que es su mano izquierda del jugador derecho
 
-        spritePath += str(num)
+        spritePath += f"{num:02d}"
         spritePath += ".png"
 
         return spritePath

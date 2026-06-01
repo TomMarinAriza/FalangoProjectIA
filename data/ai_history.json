@@ -1,0 +1,52 @@
+{
+  "totals": {
+    "thumb": 6,
+    "index": 13,
+    "middle": 6,
+    "ring": 7,
+    "pinkie": 12
+  },
+  "transitions": {
+    "thumb": {
+      "thumb": 1,
+      "index": 3,
+      "middle": 0,
+      "ring": 2,
+      "pinkie": 0
+    },
+    "index": {
+      "thumb": 1,
+      "index": 5,
+      "middle": 4,
+      "ring": 1,
+      "pinkie": 2
+    },
+    "middle": {
+      "thumb": 0,
+      "index": 3,
+      "middle": 0,
+      "ring": 0,
+      "pinkie": 3
+    },
+    "ring": {
+      "thumb": 2,
+      "index": 1,
+      "middle": 0,
+      "ring": 1,
+      "pinkie": 2
+    },
+    "pinkie": {
+      "thumb": 1,
+      "index": 1,
+      "middle": 2,
+      "ring": 3,
+      "pinkie": 5
+    }
+  },
+  "games": {
+    "total": 0,
+    "player_wins": 0,
+    "cpu_wins": 0
+  },
+  "last_player_finger": "ring"
+}

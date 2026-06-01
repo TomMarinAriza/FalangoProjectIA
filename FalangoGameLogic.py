@@ -1,4 +1,5 @@
 import FalangoEssentialSystems as FES
+import ai
 
 # El juego tiene 2 jugadores
 # Las rondas controlan el estado de las manos en el juego
@@ -49,7 +50,7 @@ class Game:
     """
     def __init__(self):
         self.player1: FES.PlayerHuman = FES.PlayerHuman(1, False)
-        self.player2: FES.PlayerCPURandom = FES.PlayerCPURandom(2, True)
+        self.player2: ai.PlayerCPUAdaptive = ai.PlayerCPUAdaptive(2, True)
         self.winner: int = 0
 
         self.currentRound: Round = None
