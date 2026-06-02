@@ -123,16 +123,27 @@ class GameWindow(QWidget):
         if self.game.evalWinner():
             return
 
+        #
         self.game.player1.chooseFinger(finger)
         self.game.player2.chooseFinger()
-        self.game.processRound()
+
+        
+        self.game.player1.right.closeHand()
+        self.game.player1.right.openFinger(self.game.player1.chosenFinger)
+        self.game.player2.right.closeHand()
+        self.game.player2.right.openFinger(self.game.player2.chosenFinger)
+
+        # Evaluar ronda
+        self.game.evalRightHands()
+        self.game.evalLeftHands()
+
         if hasattr(self.game.player2, "record_player_choice"):
             self.game.player2.record_player_choice(finger)
 
         self.update_hands()
 
         if self.game.evalWinner():
-            winner = self.game.winner.playerID if self.game.winner else 0
+            winner = 1 if self.game.player1.isGameWinner else (2 if self.game.player2.isGameWinner else 0)
             if hasattr(self.game.player2, "record_game_result"):
                 self.game.player2.record_game_result(winner)
             if winner == 1:
@@ -150,7 +161,7 @@ class GameWindow(QWidget):
             self.status_label.setText("Elige un dedo para jugar.")
 
     def reset_game(self) -> None:
-        self.game = FGL.Game()
+        self.game = FGL.Game(ai.PlayerCPUAdaptive(True))
         self.status_label.setText("Elige un dedo para jugar.")
         for btn in self.buttons.values():
             btn.setEnabled(True)
