@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QFont, QPixmap
-from PyQt6.QtWidgets import (
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QFont, QPixmap
+from PySide6.QtWidgets import (
     QApplication,
     QGridLayout,
     QLabel,
@@ -16,14 +16,14 @@ from PyQt6.QtWidgets import (
 
 import FalangoEssentialSystems as FES
 import FalangoGameLogic as FGL
-
+import ai
 
 class GameWindow(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Falango - PyQt")
-
-        self.game = FGL.Game()
+            
+        self.game = FGL.Game(ai.PlayerCPUAdaptive(True))
         self.root = Path(__file__).resolve().parent
 
         self.status_label = QLabel("Elige un dedo para jugar.")
@@ -160,14 +160,12 @@ class GameWindow(QWidget):
         super().resizeEvent(event)
         self.update_hands()
 
-
 def main() -> None:
     app = QApplication([])
     window = GameWindow()
     window.resize(800, 500)
     window.show()
     app.exec()
-
 
 if __name__ == "__main__":
     main()

@@ -171,7 +171,7 @@ class Player:
     """
     Clase base para los jugadores, donde se definen todas las cosas que aplican para ambos jugadores sin importar cómo son.
 
-    Tienen 2 manos, un dedo escogido tanto para rondas como posiciones especiales, un ID, indicadores de uso para la tijera y la pistola para que solo se usen 1 vez por obtención, una cola de los últimos 2 dedos sacados para no sacar 3 veces seguidas el mismo y datos que van recopilando tanto para ser usados en las dificultades como para el historial de partidas. isInverted se refiere a si usa los sprites invertidos o no
+    Tienen 2 manos, un dedo escogido tanto para rondas como posiciones especiales, indicadores de uso para la tijera y la pistola para que solo se usen 1 vez por obtención, una cola de los últimos 2 dedos sacados para no sacar 3 veces seguidas el mismo y datos que van recopilando tanto para ser usados en las dificultades como para el historial de partidas. isInverted se refiere a si usa los sprites invertidos o no
     """
     def __init__(self, isInverted: bool):
         self.right: Hand = Hand(False, isInverted)

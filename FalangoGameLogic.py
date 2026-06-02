@@ -1,5 +1,6 @@
 import FalangoEssentialSystems as FES
 import ai
+import dataclasses
 
 # El juego tiene 2 jugadores
 # Las rondas controlan el estado de las manos en el juego
@@ -10,7 +11,7 @@ import ai
 
 class Round:
     """
-    Clase ronda para gestionar las rondas en el juego
+    Clase ronda para guardar información de rondas del juego
 
     - player1 y player2: FES.Player
     - winner: FES.Player
@@ -51,9 +52,9 @@ class Game:
     - currentRound: Round
     - roundList: list[Round] -> Recuento de las rondas jugadas
     """
-    def __init__(self, player2: FES.Player):
-        self.player1: FES.PlayerHuman = FES.PlayerHuman(1, False)
-        self.player2: FES.PlayerCPURandom = FES.PlayerCPURandom(2, True)
+    def __init__(self, Player2: FES.Player):
+        self.player1: FES.PlayerHuman = FES.PlayerHuman(False)
+        self.player2: FES.PlayerCPURandom = Player2
         self.winner: int = 0
 
         self.roundList: list[Round] = []
@@ -91,6 +92,8 @@ class Game:
                 case "scissors":
                     self.player2.left.closeFinger(self.player1.chosenFinger)
                     self.player1.scissorsUsed = True
+                case "pistol":
+                    self.player2.left.closeHand()
                 case "lil' devil": self.player1.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player2.isGameWinner = True
         elif self.player2.left.specialPosition != "":
@@ -99,6 +102,8 @@ class Game:
                 case "scissors":
                     self.player1.left.closeFinger(self.player1.chosenFinger)
                     self.player2.scissorsUsed = True
+                case "pistol":
+                    self.player1.left.closeHand()
                 case "lil' devil": self.player2.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player1.isGameWinner = True
 
