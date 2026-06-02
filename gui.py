@@ -123,14 +123,14 @@ class GameWindow(QWidget):
         if self.game.evalWinner():
             return
 
-        #
         self.game.player1.chooseFinger(finger)
         self.game.player2.chooseFinger()
 
         
         self.game.player1.right.closeHand()
-        self.game.player1.right.openFinger(self.game.player1.chosenFinger)
         self.game.player2.right.closeHand()
+        
+        self.game.player1.right.openFinger(self.game.player1.chosenFinger)
         self.game.player2.right.openFinger(self.game.player2.chosenFinger)
 
         # Evaluar ronda
@@ -141,6 +141,10 @@ class GameWindow(QWidget):
             self.game.player2.record_player_choice(finger)
 
         self.update_hands()
+
+        handNum = self.game.player2.left.handNum()
+        print(handNum)
+        print(7 - handNum + 16 * handNum // 8)
 
         if self.game.evalWinner():
             winner = 1 if self.game.player1.isGameWinner else (2 if self.game.player2.isGameWinner else 0)

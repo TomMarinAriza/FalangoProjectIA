@@ -115,7 +115,7 @@ class Hand:
         if not self.isInverted and not self.isLeftHand: num += 32 # Si se trata de la mano derecha del jugador a la izquierda
         elif self.isInverted: # Si se trata del jugador a la derecha
             num = 7 - num + 16 * num // 8
-            if self.isLeftHand: num += 32 # Si se trata del jugador a la izquierda
+            if self.isLeftHand: num += 32 # Si se trata de su mano izquierda
 
             # Si no se cumple este if, se presume que es mano derecha del jugador izquierdo
         

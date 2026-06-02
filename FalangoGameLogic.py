@@ -88,26 +88,30 @@ class Game:
     def evalLeftHands(self):
         if self.player1.left.specialPosition != "":
             match self.player1.left.specialPosition:
-                case "phone": self.player1.left.openFinger(self.player1.chosenFinger)
-                case "scissors":
-                    self.player2.left.closeFinger(self.player1.chosenFinger)
-                    self.player1.scissorsUsed = True
+                # case "phone": self.player1.left.openFinger(self.player1.chosenFinger)
+                # case "scissors":
+                #     self.player2.left.closeFinger(self.player1.chosenFinger)
+                #     self.player1.scissorsUsed = True
                 case "pistol":
                     self.player2.left.closeHand()
-                case "lil' devil": self.player1.left.closeFinger(self.player1.chosenFinger)
+                # case "lil' devil": self.player1.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player2.isGameWinner = True
         elif self.player2.left.specialPosition != "":
             match self.player2.left.specialPosition:
-                case "phone": self.player2.left.openFinger(self.player1.chosenFinger)
-                case "scissors":
-                    self.player1.left.closeFinger(self.player1.chosenFinger)
-                    self.player2.scissorsUsed = True
+                # case "phone": self.player2.left.openFinger(self.player1.chosenFinger)
+                # case "scissors":
+                #     self.player1.left.closeFinger(self.player1.chosenFinger)
+                #     self.player2.scissorsUsed = True
                 case "pistol":
                     self.player1.left.closeHand()
-                case "lil' devil": self.player2.left.closeFinger(self.player1.chosenFinger)
+                # case "lil' devil": self.player2.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player1.isGameWinner = True
 
+                # Soporte a esas posiciones comentadas retirado por falta de tiempo
+
     def evalWinner(self) -> bool:
+        if self.player1.isGameWinner or self.player2.isGameWinner:
+            return True
         if self.player1.left.isHandOpen(): self.player1.isGameWinner = True
         elif self.player2.left.isHandOpen(): self.player2.isGameWinner = True
         return self.player1.left.isHandOpen() or self.player2.left.isHandOpen()
