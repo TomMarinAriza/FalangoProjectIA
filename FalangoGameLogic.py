@@ -9,39 +9,39 @@ import dataclasses
 # # El juego debe ser capaz de crear rondas
 # # También debe poder almacenar la lista de rondas
 
-class Round:
-    """
-    Clase ronda para guardar información de rondas del juego
+# class Round:
+#     """
+#     Clase ronda para guardar información de rondas del juego
 
-    - player1 y player2: FES.Player
-    - winner: FES.Player
-    - duel: bool -> indicador de ronda duelo
-    """
-    def __init__(self, player1: FES.Player, player2: FES.Player, duel: bool):
-        self.player1: FES.Player = player1
-        self.player2: FES.Player = player2
-        self.winner: FES.Player = None
+#     - player1 y player2: FES.Player
+#     - winner: FES.Player
+#     - duel: bool -> indicador de ronda duelo
+#     """
+#     def __init__(self, player1: FES.Player, player2: FES.Player, duel: bool):
+#         self.player1: FES.Player = player1
+#         self.player2: FES.Player = player2
+#         self.winner: FES.Player = None
 
-        self.duel: bool = duel # Variable de estado de la ronda. True para ronda pistola, false para ronda normal
+#         self.duel: bool = duel # Variable de estado de la ronda. True para ronda pistola, false para ronda normal
 
-    def evalRound(self): # evaluar el resultado de una ronda
-        self.winner = 0
+#     def evalRound(self): # evaluar el resultado de una ronda
+#         self.winner = 0
 
-        if self.player1.right.hasOneOpenFinger() and self.player2.right.hasOneOpenFinger():
-            fingerList1 = list(self.player1.right.fingersDict.values())
-            fingerList2 = list(self.player2.right.fingersDict.values())
+#         if self.player1.right.hasOneOpenFinger() and self.player2.right.hasOneOpenFinger():
+#             fingerList1 = list(self.player1.right.fingersDict.values())
+#             fingerList2 = list(self.player2.right.fingersDict.values())
 
-            fingerIndex1 = fingerList1.index(True)
-            fingerIndex2 = fingerList2.index(True)
+#             fingerIndex1 = fingerList1.index(True)
+#             fingerIndex2 = fingerList2.index(True)
 
-            if fingerList1[fingerIndex1] and fingerList2[(fingerIndex1 + 1) % 5]:
-                self.winner = self.player1
-                if self.duel: self.player2.left.closeHand()
-                self.player1.left.openFingerSpecial(FES.fingerNames[fingerIndex2])
-            elif fingerList2[fingerIndex2] and fingerList1[(fingerIndex2 + 1) % 5]:
-                self.winner = self.player2
-                if self.duel: self.player1.left.closeHand()
-                self.player2.left.openFingerSpecial(FES.fingerNames[fingerIndex1])
+#             if fingerList1[fingerIndex1] and fingerList2[(fingerIndex1 + 1) % 5]:
+#                 self.winner = self.player1
+#                 if self.duel: self.player2.left.closeHand()
+#                 self.player1.left.openFingerSpecial(FES.fingerNames[fingerIndex2])
+#             elif fingerList2[fingerIndex2] and fingerList1[(fingerIndex2 + 1) % 5]:
+#                 self.winner = self.player2
+#                 if self.duel: self.player1.left.closeHand()
+#                 self.player2.left.openFingerSpecial(FES.fingerNames[fingerIndex1])
 
 class Game:
     """
@@ -57,7 +57,7 @@ class Game:
         self.player2: FES.PlayerCPURandom = Player2
         self.winner: int = 0
 
-        self.roundList: list[Round] = []
+        # self.roundList: list[Round] = []
     
     def evalRightHands(self): # evaluar el resultado de una ronda
         if self.player1.right.hasOneOpenFinger() and self.player2.right.hasOneOpenFinger():
@@ -92,8 +92,7 @@ class Game:
                 # case "scissors":
                 #     self.player2.left.closeFinger(self.player1.chosenFinger)
                 #     self.player1.scissorsUsed = True
-                case "pistol":
-                    self.player2.left.closeHand()
+                case "pistol": self.player2.left.closeHand()
                 # case "lil' devil": self.player1.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player2.isGameWinner = True
         elif self.player2.left.specialPosition != "":
@@ -102,12 +101,12 @@ class Game:
                 # case "scissors":
                 #     self.player1.left.closeFinger(self.player1.chosenFinger)
                 #     self.player2.scissorsUsed = True
-                case "pistol":
-                    self.player1.left.closeHand()
+                case "pistol": self.player1.left.closeHand()
                 # case "lil' devil": self.player2.left.closeFinger(self.player1.chosenFinger)
                 case "fuck you": self.player1.isGameWinner = True
 
                 # Soporte a esas posiciones comentadas retirado por falta de tiempo
+        
 
     def evalWinner(self) -> bool:
         if self.player1.isGameWinner or self.player2.isGameWinner:

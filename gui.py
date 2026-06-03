@@ -23,7 +23,7 @@ class GameWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Falango - PyQt")
             
-        self.game = FGL.Game(ai.PlayerCPUAdaptive(True))
+        self.game = FGL.Game(ai.PlayerCPUAdaptive(isInverted=True))
         self.root = Path(__file__).resolve().parent
 
         self.status_label = QLabel("Elige un dedo para jugar.")

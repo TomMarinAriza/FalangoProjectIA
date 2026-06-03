@@ -1,52 +1,52 @@
 {
   "totals": {
-    "thumb": 31,
-    "index": 48,
-    "middle": 28,
-    "ring": 23,
-    "pinkie": 35
+    "thumb": 71,
+    "index": 81,
+    "middle": 42,
+    "ring": 38,
+    "pinkie": 60
   },
   "transitions": {
     "thumb": {
-      "thumb": 3,
-      "index": 16,
-      "middle": 1,
-      "ring": 7,
-      "pinkie": 4
+      "thumb": 24,
+      "index": 22,
+      "middle": 3,
+      "ring": 12,
+      "pinkie": 10
     },
     "index": {
-      "thumb": 12,
-      "index": 7,
-      "middle": 15,
-      "ring": 3,
-      "pinkie": 10
+      "thumb": 25,
+      "index": 9,
+      "middle": 23,
+      "ring": 7,
+      "pinkie": 17
     },
     "middle": {
       "thumb": 4,
-      "index": 12,
+      "index": 20,
       "middle": 2,
-      "ring": 1,
-      "pinkie": 9
+      "ring": 2,
+      "pinkie": 14
     },
     "ring": {
-      "thumb": 9,
-      "index": 6,
-      "middle": 1,
+      "thumb": 11,
+      "index": 10,
+      "middle": 2,
       "ring": 1,
-      "pinkie": 6
+      "pinkie": 13
     },
     "pinkie": {
-      "thumb": 2,
-      "index": 7,
-      "middle": 9,
-      "ring": 11,
+      "thumb": 6,
+      "index": 20,
+      "middle": 12,
+      "ring": 16,
       "pinkie": 6
     }
   },
   "games": {
-    "total": 6,
-    "player_wins": 5,
-    "cpu_wins": 1
+    "total": 12,
+    "player_wins": 9,
+    "cpu_wins": 3
   },
-  "last_player_finger": "index"
+  "last_player_finger": "ring"
 }
